@@ -20,6 +20,9 @@ def render_list(renderer, token, state) -> str:
 def _render_list_item(renderer, parent, item, state):
     leading = parent['leading']
     text = ''
+    # support for task lists. plugins are not properly supported by markdown renderer
+    if 'checked' in item['attrs']:
+        leading += f"[{'x' if item['attrs']['checked'] else ' '}] "
     for tok in item['children']:
         if tok['type'] == 'list':
             tok['parent'] = parent
